@@ -1,0 +1,38 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="About — Hanson Nguyen">
+	<section class="mx-auto w-full max-w-3xl px-5 pt-16 pb-24">
+		<h1 class="text-4xl font-bold text-zinc-50 sm:text-5xl">About me</h1>
+
+		<div class="markdown mt-8">
+			<p>
+				I'm <strong>Hanson Nguyen</strong> — an electronics hobbyist and firmware tinkerer.
+				When I'm not writing code, I'm usually at the workbench soldering, debugging a bus,
+				or designing a board that will need one more revision than I planned.
+			</p>
+			<p>
+				This site is where I keep a portfolio of the things I build and write about what I
+				learn along the way. Most of it is open source when it can be.
+			</p>
+		</div>
+
+		<h2 class="mt-12 text-2xl font-semibold text-zinc-50">What I work with</h2>
+		<ul class="mt-6 grid gap-3 sm:grid-cols-2">
+			{[
+				['Firmware', 'ESP32 / ESP8266, Arduino C++, MicroPython'],
+				['Board design', 'KiCad, hand layout, JLCPCB / OSH Park fab'],
+				['Embedded bus', 'I²C, SPI, UART, RS-485'],
+				['Automation', 'MQTT, Home Assistant, Node-RED'],
+				['Tools', 'Oscilloscope, logic analyzer, hot air rework'],
+				['Software', 'TypeScript, Astro, Python, Git'],
+			].map(([label, detail]) => (
+				<li class="rounded-xl border border-zinc-800 bg-zinc-900/50 p-4">
+					<p class="font-semibold text-zinc-100">{label}</p>
+					<p class="mt-1 text-sm text-zinc-400">{detail}</p>
+				</li>
+			))}
+		</ul>
+	</section>
+</Layout>

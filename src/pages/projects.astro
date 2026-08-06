@@ -1,0 +1,20 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+
+const projects = (await getCollection('projects')).sort((a, b) => b.data.year - a.data.year);
+---
+
+<Layout title="Projects — Hanson Nguyen">
+	<section class="mx-auto w-full max-w-6xl px-5 pt-16 pb-24">
+		<h1 class="text-4xl font-bold text-zinc-50 sm:text-5xl">Projects</h1>
+		<p class="mt-4 max-w-2xl text-lg text-zinc-400">
+			Electronics and hobby builds — from weather stations to hand-wired keyboards. Each page
+			has a writeup, the parts list, and what I learned.
+		</p>
+		<div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+			{projects.map((project) => <ProjectCard project={project} />)}
+		</div>
+	</section>
+</Layout>

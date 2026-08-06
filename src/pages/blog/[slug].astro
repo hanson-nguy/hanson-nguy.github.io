@@ -1,0 +1,58 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import Layout from '../../layouts/Layout.astro';
+import { formatDate, readingTime } from '../../lib/format';
+import { withBase } from '../../lib/path';
+
+export const getStaticPaths = (async () => {
+	const posts = await getCollection('blog');
+	return posts
+		.filter((p) => !p.data.draft)
+		.map((post) => ({
+			params: { slug: post.id },
+			props: { post },
+		}));
+}) satisfies GetStaticPaths;
+
+interface Props {
+	post: Awaited<ReturnType<typeof getCollection<'blog'>>>[number];
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Layout
+	title={`${post.data.title} — Hanson Nguyen`}
+	description={post.data.description}
+	image={post.data.image}
+>
+	<article class="mx-auto w-full max-w-3xl px-5 pt-16 pb-24">
+		<p class="mb-3 font-mono text-sm text-zinc-500">
+			{formatDate(post.data.date)} · {readingTime(post.body)}
+		</p>
+		<h1 class="text-4xl font-bold leading-tight text-zinc-50">{post.data.title}</h1>
+		<p class="mt-4 text-lg text-zinc-400">{post.data.description}</p>
+
+		<ul class="mt-6 flex flex-wrap gap-2">
+			{post.data.tags.map((tag) => (
+				<li class="rounded-full bg-zinc-800 px-3 py-1 font-mono text-xs text-zinc-400">
+					{tag}
+				</li>
+			))}
+		</ul>
+
+		<img
+			src={withBase(post.data.image)}
+			alt={post.data.title}
+			width={800}
+			height={600}
+			class="mt-8 aspect-[4/3] w-full rounded-2xl border border-zinc-800 object-cover"
+		/>
+
+		<div class="markdown mt-10">
+			<Content />
+		</div>
+	</article>
+</Layout>

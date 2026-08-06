@@ -1,0 +1,42 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate, readingTime } from '../lib/format';
+import { withBase } from '../lib/path';
+
+type Props = {
+	post: CollectionEntry<'blog'>;
+};
+
+const { post } = Astro.props;
+const url = withBase(`/blog/${post.id}`);
+const img = withBase(post.data.image);
+---
+
+<article class="group flex flex-col overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/50 transition-colors hover:border-emerald-400/50">
+	<a href={url} class="block overflow-hidden">
+		<img
+			src={img}
+			alt={post.data.title}
+			width={800}
+			height={600}
+			loading="lazy"
+			class="aspect-[4/3] w-full object-cover transition-transform duration-300 group-hover:scale-105"
+		/>
+	</a>
+	<div class="flex flex-1 flex-col gap-3 p-5">
+		<p class="font-mono text-xs text-zinc-500">
+			{formatDate(post.data.date)} · {readingTime(post.body)}
+		</p>
+		<a href={url}>
+			<h2 class="text-xl font-semibold text-zinc-50 transition-colors group-hover:text-emerald-400">
+				{post.data.title}
+			</h2>
+		</a>
+		<p class="line-clamp-2 text-sm text-zinc-400">{post.data.description}</p>
+		<ul class="mt-auto flex flex-wrap gap-1.5 pt-2">
+			{post.data.tags.slice(0, 4).map((tag) => (
+				<li class="rounded bg-zinc-800 px-2 py-0.5 font-mono text-xs text-zinc-400">{tag}</li>
+			))}
+		</ul>
+	</div>
+</article>

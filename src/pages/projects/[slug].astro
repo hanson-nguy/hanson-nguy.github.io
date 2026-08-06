@@ -1,0 +1,100 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import Layout from '../../layouts/Layout.astro';
+import { withBase } from '../../lib/path';
+
+export const getStaticPaths = (async () => {
+	const projects = await getCollection('projects');
+	return projects.map((project) => ({
+		params: { slug: project.id },
+		props: { project },
+	}));
+}) satisfies GetStaticPaths;
+
+interface Props {
+	project: Awaited<ReturnType<typeof getCollection<'projects'>>>[number];
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+
+const statusLabel = {
+	completed: 'Completed',
+	'in-progress': 'In progress',
+	planned: 'Planned',
+};
+---
+
+<Layout title={`${project.data.title} — Hanson Nguyen`} description={project.data.description} image={project.data.image}>
+	<article class="mx-auto w-full max-w-3xl px-5 pt-16 pb-24">
+		<p class="mb-3 font-mono text-sm text-zinc-500">
+			project · <span class="text-emerald-400">{project.data.year}</span>
+		</p>
+		<h1 class="text-4xl font-bold leading-tight text-zinc-50">{project.data.title}</h1>
+		<p class="mt-4 text-lg text-zinc-400">{project.data.description}</p>
+
+		<div class="mt-6 flex flex-wrap items-center gap-2">
+			<span
+				class:list={[
+					'rounded-full px-3 py-1 text-xs font-semibold',
+					project.data.status === 'completed' && 'bg-emerald-400/10 text-emerald-400',
+					project.data.status === 'in-progress' && 'bg-amber-400/10 text-amber-400',
+					project.data.status === 'planned' && 'bg-zinc-500/10 text-zinc-400',
+				]}
+			>
+				{statusLabel[project.data.status]}
+			</span>
+			{project.data.tags.map((tag) => (
+				<span class="rounded-full bg-zinc-800 px-3 py-1 font-mono text-xs text-zinc-400">
+					{tag}
+				</span>
+			))}
+			<span class="flex-1"></span>
+			{project.data.links?.github && (
+				<a
+					href={project.data.links.github}
+					class="rounded-lg border border-zinc-700 px-4 py-1.5 text-sm text-zinc-200 hover:border-emerald-400/60 hover:text-emerald-400"
+				>
+					GitHub
+				</a>
+			)}
+			{project.data.links?.demo && (
+				<a
+					href={project.data.links.demo}
+					class="rounded-lg bg-emerald-400 px-4 py-1.5 text-sm font-semibold text-zinc-950 hover:bg-emerald-300"
+				>
+					Live demo
+				</a>
+			)}
+		</div>
+
+		<img
+			src={withBase(project.data.image)}
+			alt={project.data.title}
+			width={800}
+			height={600}
+			class="mt-8 aspect-[4/3] w-full rounded-2xl border border-zinc-800 object-cover"
+		/>
+
+		{project.data.parts && (
+			<section class="mt-8 rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6">
+				<h2 class="mb-3 font-mono text-sm font-semibold uppercase tracking-wider text-emerald-400">
+					Parts &amp; components
+				</h2>
+				<ul class="grid gap-2 sm:grid-cols-2">
+					{project.data.parts.map((part) => (
+						<li class="flex items-center gap-2 text-sm text-zinc-300">
+							<span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+							{part}
+						</li>
+					))}
+				</ul>
+			</section>
+		)}
+
+		<div class="markdown mt-10">
+			<Content />
+		</div>
+	</article>
+</Layout>

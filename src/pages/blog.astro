@@ -1,19 +1,21 @@
 ---
-import { getCollection } from "astro:content";
-import H1 from "../components/H1.astro";
-import Main from "../components/Main.astro";
-import Layout from "../layouts/Layout.astro";
-import PostList from "../components/PostList.astro";
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import PostCard from '../components/PostCard.astro';
 
-const posts = await getCollection("posts");
-// console.log(posts)
+const posts = (await getCollection('blog'))
+	.filter((p) => !p.data.draft)
+	.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 
-<Layout title = "Hanson Nguyen's Blog">
-	<Main>
-	<H1 text="I am a Blog Header" />
-    {posts.map((post) => (
-        <PostList posts={posts}/>
-    ))}
-	</Main>
+<Layout title="Blog — Hanson Nguyen">
+	<section class="mx-auto w-full max-w-6xl px-5 pt-16 pb-24">
+		<h1 class="text-4xl font-bold text-zinc-50 sm:text-5xl">Blog</h1>
+		<p class="mt-4 max-w-2xl text-lg text-zinc-400">
+			Build logs, tutorials, and notes on electronics and hobby engineering.
+		</p>
+		<div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+			{posts.map((post) => <PostCard post={post} />)}
+		</div>
+	</section>
 </Layout>

@@ -1,0 +1,38 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Contact — Hanson Nguyen">
+	<section class="mx-auto w-full max-w-3xl px-5 pt-16 pb-24">
+		<h1 class="text-4xl font-bold text-zinc-50 sm:text-5xl">Contact</h1>
+		<p class="mt-4 text-lg text-zinc-400">
+			Questions about a project, collaboration ideas, or just want to talk electronics? Drop me
+			a line.
+		</p>
+
+		<div class="mt-10 grid gap-4 sm:grid-cols-2">
+			<a
+				href="mailto:hello@example.com"
+				class="group rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6 transition-colors hover:border-emerald-400/60"
+			>
+				<p class="font-mono text-sm text-emerald-400">email</p>
+				<p class="mt-2 text-lg text-zinc-100 group-hover:text-emerald-400">
+					hello@example.com
+				</p>
+			</a>
+			<a
+				href="https://github.com/hanthemanson"
+				class="group rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6 transition-colors hover:border-emerald-400/60"
+			>
+				<p class="font-mono text-sm text-emerald-400">github</p>
+				<p class="mt-2 text-lg text-zinc-100 group-hover:text-emerald-400">
+					@hanthemanson
+				</p>
+			</a>
+		</div>
+
+		<p class="mt-10 font-mono text-sm text-zinc-500">
+			best response times: evenings &amp; weekends
+		</p>
+	</section>
+</Layout>
