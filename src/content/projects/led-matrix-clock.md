@@ -1,19 +1,20 @@
 ---
-title: LED Matrix Clock
-description: A WiFi-connected RGB LED matrix clock with configurable brightness, a weather overlay, and a web interface for changing themes.
-image: /images/led-matrix.svg
-tags: ["ESP8266", "LED matrix", "WiFi", "web server", "P10 panel"]
-parts: ["ESP8266 (NodeMCU)", "P10 32x16 RGB panel", "5V 10A supply", "74HC245 shifters", "capacitors 470µF"]
-year: 2024
+title: SPICE Photon Daemon
+description: A compact SPICE thermal model for superconducting nanowire single-photon detectors, capturing electrothermal feedback for fast circuit design.
+image: /images/pcb.svg
+tags: []
+parts: [LT Spice]
+year: 2025
 status: completed
+category: academic
 featured: false
 ---
 
-# LED Matrix Clock
+# SPICE Photon Daemon
 
 ## Overview
 
-A P10 RGB panel driven by an ESP8266 that shows the time, date, and a scrolling weather line. Brightness auto-dims after midnight so it doesn't light up the whole bedroom.
+A model used in spice
 
 ## How it works
 

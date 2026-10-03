@@ -1,0 +1,22 @@
+---
+type Props = {
+	category: 'academic' | 'hobby';
+};
+
+const { category } = Astro.props;
+
+const label = {
+	academic: 'Academic',
+	hobby: 'Hobby',
+};
+---
+
+<span
+	class:list={[
+		'rounded-full border px-2.5 py-0.5 text-xs font-semibold',
+		category === 'academic' && 'border-cobalt/30 bg-tint text-cobalt',
+		category === 'hobby' && 'border-azure/30 bg-tint text-azure',
+	]}
+>
+	{label[category]}
+</span>

@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
 import Layout from '../../layouts/Layout.astro';
 import { withBase } from '../../lib/path';
+import CategoryBadge from '../../components/CategoryBadge.astro';
 
 export const getStaticPaths = (async () => {
 	const projects = await getCollection('projects');
@@ -28,25 +29,26 @@ const statusLabel = {
 
 <Layout title={`${project.data.title} — Hanson Nguyen`} description={project.data.description} image={project.data.image}>
 	<article class="mx-auto w-full max-w-3xl px-5 pt-16 pb-24">
-		<p class="mb-3 font-mono text-sm text-zinc-500">
-			project · <span class="text-emerald-400">{project.data.year}</span>
+		<p class="mb-3 font-mono text-sm text-slate">
+			project · <span class="text-azure">{project.data.year}</span>
 		</p>
-		<h1 class="text-4xl font-bold leading-tight text-zinc-50">{project.data.title}</h1>
-		<p class="mt-4 text-lg text-zinc-400">{project.data.description}</p>
+		<h1 class="font-display text-4xl leading-tight text-ink">{project.data.title}</h1>
+		<p class="mt-4 text-lg text-slate">{project.data.description}</p>
 
 		<div class="mt-6 flex flex-wrap items-center gap-2">
+			<CategoryBadge category={project.data.category} />
 			<span
 				class:list={[
 					'rounded-full px-3 py-1 text-xs font-semibold',
-					project.data.status === 'completed' && 'bg-emerald-400/10 text-emerald-400',
-					project.data.status === 'in-progress' && 'bg-amber-400/10 text-amber-400',
-					project.data.status === 'planned' && 'bg-zinc-500/10 text-zinc-400',
+					project.data.status === 'completed' && 'bg-tint text-cobalt',
+					project.data.status === 'in-progress' && 'bg-tint text-azure',
+					project.data.status === 'planned' && 'bg-slate/10 text-slate',
 				]}
 			>
 				{statusLabel[project.data.status]}
 			</span>
 			{project.data.tags.map((tag) => (
-				<span class="rounded-full bg-zinc-800 px-3 py-1 font-mono text-xs text-zinc-400">
+				<span class="rounded-full border border-hairline px-3 py-1 font-mono text-xs text-slate">
 					{tag}
 				</span>
 			))}
@@ -54,7 +56,7 @@ const statusLabel = {
 			{project.data.links?.github && (
 				<a
 					href={project.data.links.github}
-					class="rounded-lg border border-zinc-700 px-4 py-1.5 text-sm text-zinc-200 hover:border-emerald-400/60 hover:text-emerald-400"
+					class="rounded-lg border-2 border-hairline px-4 py-1.5 text-sm font-semibold text-ink hover:border-cobalt hover:text-cobalt"
 				>
 					GitHub
 				</a>
@@ -62,7 +64,7 @@ const statusLabel = {
 			{project.data.links?.demo && (
 				<a
 					href={project.data.links.demo}
-					class="rounded-lg bg-emerald-400 px-4 py-1.5 text-sm font-semibold text-zinc-950 hover:bg-emerald-300"
+					class="rounded-lg border-2 border-cobalt bg-cobalt px-4 py-1.5 text-sm font-semibold text-white hover:border-cobalt-hover hover:bg-cobalt-hover"
 				>
 					Live demo
 				</a>
@@ -72,20 +74,18 @@ const statusLabel = {
 		<img
 			src={withBase(project.data.image)}
 			alt={project.data.title}
-			width={800}
-			height={600}
-			class="mt-8 aspect-[4/3] w-full rounded-2xl border border-zinc-800 object-cover"
+			class="mt-8 w-full rounded-xl border border-hairline bg-surface object-contain"
 		/>
 
 		{project.data.parts && (
-			<section class="mt-8 rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6">
-				<h2 class="mb-3 font-mono text-sm font-semibold uppercase tracking-wider text-emerald-400">
+			<section class="mt-8 rounded-xl border border-hairline bg-surface p-6">
+				<h2 class="mb-3 font-mono text-sm font-semibold uppercase tracking-wider text-cobalt">
 					Parts &amp; components
 				</h2>
 				<ul class="grid gap-2 sm:grid-cols-2">
 					{project.data.parts.map((part) => (
-						<li class="flex items-center gap-2 text-sm text-zinc-300">
-							<span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+						<li class="flex items-center gap-2 text-sm text-ink">
+							<span class="h-1.5 w-1.5 rounded-full bg-azure"></span>
 							{part}
 						</li>
 					))}

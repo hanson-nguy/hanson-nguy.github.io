@@ -1,21 +1,53 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-display: "Paytone One", "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Fira Code", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --color-paper: #f6f8fc;
+  --color-surface: #ffffff;
+  --color-ink: #0e1b3a;
+  --color-cobalt: #0047ab;
+  --color-cobalt-hover: #1e5fd6;
+  --color-azure: #4c82e8;
+  --color-sky: #9dbbf0;
+  --color-tint: #e9f0fc;
+  --color-slate: #5b6b84;
+  --color-hairline: #e2e8f3;
 }
 
 html {
   scroll-behavior: smooth;
 }
 
+body {
+  background-color: var(--color-paper);
+  background-image:
+    repeating-linear-gradient(
+      to right,
+      var(--color-tint) 0px,
+      var(--color-tint) 1px,
+      transparent 1px,
+      transparent 48px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      var(--color-tint) 0px,
+      var(--color-tint) 1px,
+      transparent 1px,
+      transparent 48px
+    );
+  color: var(--color-ink);
+}
+
 ::selection {
-  background-color: var(--color-emerald-400);
-  color: var(--color-zinc-950);
+  background-color: var(--color-cobalt);
+  color: var(--color-paper);
 }
 
 .markdown {
-  color: var(--color-zinc-300);
+  color: var(--color-ink);
   line-height: 1.75;
 }
 
@@ -23,32 +55,40 @@ html {
   margin-top: 1.5em;
 }
 
+.markdown h1 {
+  color: var(--color-ink);
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-top: 2em;
+}
+
 .markdown h2 {
-  color: var(--color-zinc-50);
+  color: var(--color-ink);
   font-size: 1.5rem;
   font-weight: 700;
   margin-top: 2.5em;
 }
 
 .markdown h3 {
-  color: var(--color-zinc-100);
+  color: var(--color-ink);
   font-size: 1.25rem;
   font-weight: 600;
   margin-top: 2em;
 }
 
 .markdown a {
-  color: var(--color-emerald-400);
+  color: var(--color-cobalt);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
 .markdown a:hover {
-  color: var(--color-emerald-300);
+  color: var(--color-cobalt-hover);
 }
 
 .markdown strong {
-  color: var(--color-zinc-100);
+  color: var(--color-ink);
 }
 
 .markdown ul,
@@ -71,14 +111,14 @@ html {
 .markdown code {
   font-family: var(--font-mono);
   font-size: 0.875em;
-  background-color: var(--color-zinc-800);
+  background-color: var(--color-tint);
   padding: 0.15em 0.4em;
   border-radius: 0.375rem;
 }
 
 .markdown pre {
-  background-color: var(--color-zinc-900);
-  border: 1px solid var(--color-zinc-800);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-hairline);
   border-radius: 0.75rem;
   padding: 1.25rem;
   overflow-x: auto;
@@ -90,9 +130,17 @@ html {
 }
 
 .markdown blockquote {
-  border-left: 3px solid var(--color-emerald-400);
+  border-left: 3px solid var(--color-azure);
   padding-left: 1.25rem;
-  color: var(--color-zinc-400);
+  color: var(--color-slate);
+}
+
+.markdown img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.75rem;
+  border: 1px solid var(--color-hairline);
+  background-color: #ffffff;
 }
 
 .markdown table {
@@ -102,12 +150,35 @@ html {
 
 .markdown th,
 .markdown td {
-  border: 1px solid var(--color-zinc-800);
+  border: 1px solid var(--color-hairline);
   padding: 0.5rem 0.75rem;
   text-align: left;
 }
 
 .markdown th {
-  color: var(--color-zinc-100);
-  background-color: var(--color-zinc-900);
+  color: var(--color-ink);
+  background-color: var(--color-tint);
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee {
+  overflow: hidden;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 36s linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
 }

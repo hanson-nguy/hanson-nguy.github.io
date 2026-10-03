@@ -4,6 +4,7 @@ import type { GetStaticPaths } from 'astro';
 import Layout from '../../layouts/Layout.astro';
 import { formatDate, readingTime } from '../../lib/format';
 import { withBase } from '../../lib/path';
+import CategoryBadge from '../../components/CategoryBadge.astro';
 
 export const getStaticPaths = (async () => {
 	const posts = await getCollection('blog');
@@ -29,15 +30,18 @@ const { Content } = await render(post);
 	image={post.data.image}
 >
 	<article class="mx-auto w-full max-w-3xl px-5 pt-16 pb-24">
-		<p class="mb-3 font-mono text-sm text-zinc-500">
-			{formatDate(post.data.date)} · {readingTime(post.body)}
-		</p>
-		<h1 class="text-4xl font-bold leading-tight text-zinc-50">{post.data.title}</h1>
-		<p class="mt-4 text-lg text-zinc-400">{post.data.description}</p>
+		<div class="mb-3 flex items-center gap-2">
+			<CategoryBadge category={post.data.category} />
+			<p class="font-mono text-sm text-slate">
+				{formatDate(post.data.date)} · {readingTime(post.body)}
+			</p>
+		</div>
+		<h1 class="font-display text-4xl leading-tight text-ink">{post.data.title}</h1>
+		<p class="mt-4 text-lg text-slate">{post.data.description}</p>
 
 		<ul class="mt-6 flex flex-wrap gap-2">
 			{post.data.tags.map((tag) => (
-				<li class="rounded-full bg-zinc-800 px-3 py-1 font-mono text-xs text-zinc-400">
+				<li class="rounded-full border border-hairline px-3 py-1 font-mono text-xs text-slate">
 					{tag}
 				</li>
 			))}
@@ -48,7 +52,7 @@ const { Content } = await render(post);
 			alt={post.data.title}
 			width={800}
 			height={600}
-			class="mt-8 aspect-[4/3] w-full rounded-2xl border border-zinc-800 object-cover"
+			class="mt-8 aspect-[4/3] w-full rounded-xl border border-hairline bg-surface object-cover"
 		/>
 
 		<div class="markdown mt-10">

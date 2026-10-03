@@ -1,0 +1,36 @@
+---
+const tags = [
+	'FPGA',
+	'Home Labbing',
+	'LTspice',
+	'ESP32',
+	'Linux',
+	'SNSPD',
+	'Bayesian inference',
+	'Quantum information',
+	'Superconductivity',
+	'Qubits',
+	'Optics'
+];
+---
+
+<section class="marquee overflow-hidden border-y border-ink/10 bg-cobalt py-4">
+	<div class="marquee-track">
+		<ul class="flex shrink-0 items-center gap-12 pr-12 font-mono text-sm tracking-wide text-paper">
+			{tags.map((tag) => (
+				<li class="flex items-center gap-12">
+					<span>{tag}</span>
+					<span class="text-sky">✦</span>
+				</li>
+			))}
+		</ul>
+		<ul class="flex shrink-0 items-center gap-12 pr-12 font-mono text-sm tracking-wide text-paper">
+			{tags.map((tag) => (
+				<li class="flex items-center gap-12">
+					<span>{tag}</span>
+					<span class="text-sky">✦</span>
+				</li>
+			))}
+		</ul>
+	</div>
+</section>

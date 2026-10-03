@@ -1,20 +1,50 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
-import ProjectCard from '../components/ProjectCard.astro';
+import FeatureRow from '../components/FeatureRow.astro';
+import { withBase } from '../lib/path';
 
 const projects = (await getCollection('projects')).sort((a, b) => b.data.year - a.data.year);
+
+const statusLabel = {
+	completed: 'Completed',
+	'in-progress': 'In progress',
+	planned: 'Planned',
+};
 ---
 
 <Layout title="Projects — Hanson Nguyen">
-	<section class="mx-auto w-full max-w-6xl px-5 pt-16 pb-24">
-		<h1 class="text-4xl font-bold text-zinc-50 sm:text-5xl">Projects</h1>
-		<p class="mt-4 max-w-2xl text-lg text-zinc-400">
-			Electronics and hobby builds — from weather stations to hand-wired keyboards. Each page
-			has a writeup, the parts list, and what I learned.
+	<section class="mx-auto w-full max-w-6xl px-5 pt-16 pb-16">
+		<p class="font-mono text-sm font-medium text-azure">projects</p>
+		<h1 class="mt-2 font-display text-4xl text-ink sm:text-5xl">Projects</h1>
+		<p class="mt-4 max-w-2xl text-lg text-slate">
+			Electronics and hobby builds — from superconducting circuit models to FPGA accelerator
+			projects. Each page has a writeup, the parts list, and what I learned.
 		</p>
-		<div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-			{projects.map((project) => <ProjectCard project={project} />)}
-		</div>
 	</section>
+
+	<div class="border-t border-hairline">
+		<div class="mx-auto flex w-full max-w-6xl flex-col gap-24 px-5 py-20">
+			{projects.map((project, i) => (
+				<section class:list={['flex flex-col gap-12', i % 2 === 1 ? 'bg-surface rounded-xl border-2 border-hairline p-6 sm:p-10' : '']}>
+					<div class="flex items-baseline gap-4">
+						<span class="font-mono text-sm font-medium text-azure">
+							{String(i + 1).padStart(2, '0')}
+						</span>
+						<span class="font-mono text-xs text-slate">{project.data.year}</span>
+					</div>
+					<FeatureRow
+						title={project.data.title}
+						description={project.data.description}
+						image={withBase(project.data.image)}
+						url={withBase(`/projects/${project.id}`)}
+						category={project.data.category}
+						meta={statusLabel[project.data.status]}
+						tags={project.data.tags}
+						flip={i % 2 === 1}
+					/>
+				</section>
+			))}
+		</div>
+	</div>
 </Layout>

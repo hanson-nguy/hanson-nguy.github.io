@@ -1,24 +1,80 @@
 ---
+import { existsSync } from 'node:fs';
 import Layout from '../layouts/Layout.astro';
+import { withBase } from '../lib/path';
+
+const hasResume = existsSync('public/resume.pdf');
 ---
 
 <Layout title="About — Hanson Nguyen">
 	<section class="mx-auto w-full max-w-3xl px-5 pt-16 pb-24">
-		<h1 class="text-4xl font-bold text-zinc-50 sm:text-5xl">About me</h1>
+		<p class="font-mono text-sm font-medium text-azure">about</p>
+		<h1 class="mt-2 font-display text-4xl text-ink sm:text-5xl">About me</h1>
 
 		<div class="markdown mt-8">
 			<p>
-				I'm <strong>Hanson Nguyen</strong> — an electronics hobbyist and firmware tinkerer.
-				When I'm not writing code, I'm usually at the workbench soldering, debugging a bus,
-				or designing a board that will need one more revision than I planned.
+				I'm <strong>Hanson Nguyen</strong> — a current PhD student at UC Berkeley researching superconducting qubits. I am also an electronics hobbyist.
 			</p>
 			<p>
-				This site is where I keep a portfolio of the things I build and write about what I
-				learn along the way. Most of it is open source when it can be.
+				This site is where I keep a portfolio of the things I build and write about what I learn along the way. Most of it is open source when it can be.
 			</p>
 		</div>
 
-		<h2 class="mt-12 text-2xl font-semibold text-zinc-50">What I work with</h2>
+		<div class="mt-6 flex flex-wrap gap-4">
+			<a
+				href="https://scholar.google.com/citations?user=TbWXOSAAAAAJ&hl=en"
+				class="rounded-lg border-2 border-hairline px-4 py-2 text-sm font-semibold text-ink transition-colors hover:border-cobalt hover:text-cobalt"
+			>
+				Google Scholar
+			</a>
+			<a
+				href="https://github.com/hanthemanson"
+				class="rounded-lg border-2 border-hairline px-4 py-2 text-sm font-semibold text-ink transition-colors hover:border-cobalt hover:text-cobalt"
+			>
+				GitHub
+			</a>
+			<a
+				href={withBase('/publications')}
+				class="rounded-lg border-2 border-hairline px-4 py-2 text-sm font-semibold text-ink transition-colors hover:border-cobalt hover:text-cobalt"
+			>
+				Publications
+			</a>
+		</div>
+
+		{hasResume && (
+			<div class="mt-10">
+				<a
+					href={withBase('/resume.pdf')}
+					download
+					class="flex items-center justify-between gap-4 rounded-xl border-2 border-hairline bg-surface p-6 transition-colors hover:border-cobalt"
+				>
+					<div>
+						<p class="font-mono text-sm text-cobalt">resume</p>
+						<p class="mt-1 text-lg font-semibold text-ink">Download my résumé</p>
+						<p class="text-sm text-slate">PDF, updated 2026</p>
+					</div>
+					<svg
+						width="28"
+						height="28"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						class="shrink-0 text-cobalt"
+					>
+						<path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v3h16v-3" />
+					</svg>
+				</a>
+
+				<iframe
+					src={withBase('/resume.pdf')}
+					title="Resume"
+					class="mt-6 h-[70vh] w-full rounded-xl border border-hairline bg-surface"
+				></iframe>
+			</div>
+		)}
+
+		<h2 class="mt-12 font-display text-2xl text-ink">What I work with</h2>
 		<ul class="mt-6 grid gap-3 sm:grid-cols-2">
 			{[
 				['Firmware', 'ESP32 / ESP8266, Arduino C++, MicroPython'],
@@ -28,9 +84,9 @@ import Layout from '../layouts/Layout.astro';
 				['Tools', 'Oscilloscope, logic analyzer, hot air rework'],
 				['Software', 'TypeScript, Astro, Python, Git'],
 			].map(([label, detail]) => (
-				<li class="rounded-xl border border-zinc-800 bg-zinc-900/50 p-4">
-					<p class="font-semibold text-zinc-100">{label}</p>
-					<p class="mt-1 text-sm text-zinc-400">{detail}</p>
+				<li class="rounded-xl border border-hairline bg-surface p-4">
+					<p class="font-semibold text-ink">{label}</p>
+					<p class="mt-1 text-sm text-slate">{detail}</p>
 				</li>
 			))}
 		</ul>

@@ -1,7 +1,9 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
-import PostCard from '../components/PostCard.astro';
+import FeatureRow from '../components/FeatureRow.astro';
+import { formatDate } from '../lib/format';
+import { withBase } from '../lib/path';
 
 const posts = (await getCollection('blog'))
 	.filter((p) => !p.data.draft)
@@ -9,13 +11,35 @@ const posts = (await getCollection('blog'))
 ---
 
 <Layout title="Blog — Hanson Nguyen">
-	<section class="mx-auto w-full max-w-6xl px-5 pt-16 pb-24">
-		<h1 class="text-4xl font-bold text-zinc-50 sm:text-5xl">Blog</h1>
-		<p class="mt-4 max-w-2xl text-lg text-zinc-400">
+	<section class="mx-auto w-full max-w-6xl px-5 pt-16 pb-16">
+		<p class="font-mono text-sm font-medium text-azure">blog</p>
+		<h1 class="mt-2 font-display text-4xl text-ink sm:text-5xl">Blog</h1>
+		<p class="mt-4 max-w-2xl text-lg text-slate">
 			Build logs, tutorials, and notes on electronics and hobby engineering.
 		</p>
-		<div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-			{posts.map((post) => <PostCard post={post} />)}
-		</div>
 	</section>
+
+	<div class="border-t border-hairline">
+		<div class="mx-auto flex w-full max-w-6xl flex-col gap-24 px-5 py-20">
+			{posts.map((post, i) => (
+				<section class:list={['flex flex-col gap-12', i % 2 === 1 ? 'bg-surface rounded-xl border-2 border-hairline p-6 sm:p-10' : '']}>
+					<div class="flex items-baseline gap-4">
+						<span class="font-mono text-sm font-medium text-azure">
+							{String(i + 1).padStart(2, '0')}
+						</span>
+						<span class="font-mono text-xs text-slate">{formatDate(post.data.date)}</span>
+					</div>
+					<FeatureRow
+						title={post.data.title}
+						description={post.data.description}
+						image={withBase(post.data.image)}
+						url={withBase(`/blog/${post.id}`)}
+						category={post.data.category}
+						tags={post.data.tags}
+						flip={i % 2 === 1}
+					/>
+				</section>
+			))}
+		</div>
+	</div>
 </Layout>

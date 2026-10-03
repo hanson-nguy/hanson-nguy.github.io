@@ -1,0 +1,78 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+
+const scholarUrl = 'https://scholar.google.com/citations?user=TbWXOSAAAAAJ&hl=en';
+
+const publications = (await getCollection('publications')).sort((a, b) => b.data.year - a.data.year);
+
+const rendered = await Promise.all(
+	publications.map(async (pub) => ({ pub, Content: (await render(pub)).Content })),
+);
+---
+
+<Layout title="Publications — Hanson Nguyen">
+	<section class="mx-auto w-full max-w-6xl px-5 pt-16 pb-16">
+		<p class="font-mono text-sm font-medium text-azure">publications</p>
+		<h1 class="mt-2 font-display text-4xl text-ink sm:text-5xl">Publications</h1>
+		<p class="mt-4 max-w-2xl text-lg text-slate">
+			Academic work in quantum information, superconducting detectors, and photovoltaics.
+		</p>
+	</section>
+
+	<div class="border-t border-hairline">
+		<div class="mx-auto w-full max-w-6xl">
+			{rendered.map(({ pub, Content }, i) => (
+				<section class:list={[
+					'border-b border-hairline',
+					i % 2 === 1 ? 'bg-surface' : 'bg-paper',
+				]}>
+					<div class="mx-auto grid w-full max-w-6xl items-start gap-6 px-5 py-12 lg:grid-cols-[auto_1fr_auto] lg:gap-12">
+						<div class="flex items-baseline gap-4 lg:flex-col lg:gap-2">
+							<span class="font-mono text-lg font-medium text-azure">
+								{String(i + 1).padStart(2, '0')}
+							</span>
+							<span class="font-mono text-xs text-slate">{pub.data.year}</span>
+						</div>
+						<div>
+							<h2 class="font-display text-2xl text-ink">
+								<a href={pub.data.link} class="transition-colors hover:text-cobalt">
+									{pub.data.title}
+								</a>
+							</h2>
+							<p class="mt-3 text-sm text-slate">
+								{pub.data.authors.join(', ')} — <span class="text-ink">{pub.data.venue}</span>
+							</p>
+							<div class="markdown mt-4">
+								<Content />
+							</div>
+						</div>
+						<div class="flex flex-col items-start gap-3 lg:items-end">
+							<p class="font-mono text-xs text-slate">
+								{pub.data.citations} citation{pub.data.citations === 1 ? '' : 's'}
+							</p>
+							<a
+								href={pub.data.link}
+								class="rounded-lg border-2 border-cobalt bg-cobalt px-4 py-2 text-sm font-semibold text-white transition-colors hover:border-cobalt-hover hover:bg-cobalt-hover"
+							>
+								Read paper →
+							</a>
+						</div>
+					</div>
+				</section>
+			))}
+		</div>
+	</div>
+
+	<div class="mx-auto w-full max-w-6xl px-5 py-16">
+		<div class="rounded-xl border border-hairline bg-surface p-6 sm:p-8">
+			<p class="font-mono text-sm text-azure">google scholar</p>
+			<a
+				href={scholarUrl}
+				class="mt-2 inline-block text-lg text-cobalt underline-offset-4 transition-colors hover:text-cobalt-hover hover:underline"
+			>
+				View full profile on Google Scholar
+			</a>
+		</div>
+	</div>
+</Layout>

@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { withBase } from '../lib/path';
+import CategoryBadge from './CategoryBadge.astro';
 
 type Props = {
 	project: CollectionEntry<'projects'>;
@@ -17,40 +18,51 @@ const statusLabel = {
 };
 ---
 
-<article class="group flex flex-col overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/50 transition-colors hover:border-emerald-400/50">
-	<a href={url} class="block overflow-hidden">
+<article
+	class:list={[
+		'group flex flex-col overflow-hidden rounded-xl border-2 bg-surface shadow-[6px_6px_0_0_var(--color-ink)/0.08] transition-all hover:-translate-y-0.5 hover:shadow-[8px_8px_0_0_var(--color-ink)/0.12]',
+		project.data.category === 'academic' ? 'border-hairline hover:border-cobalt' : 'border-hairline hover:border-azure',
+	]}
+>
+	<a href={url} class="block overflow-hidden border-b border-hairline">
 		<img
 			src={img}
 			alt={project.data.title}
 			width={800}
 			height={600}
 			loading="lazy"
-			class="aspect-[4/3] w-full object-cover transition-transform duration-300 group-hover:scale-105"
+			class="aspect-[4/3] w-full bg-white object-cover transition-transform duration-300 group-hover:scale-105"
 		/>
 	</a>
 	<div class="flex flex-1 flex-col gap-3 p-5">
-		<div class="flex items-center justify-between gap-2">
+		<div class="flex items-center gap-2">
+			<CategoryBadge category={project.data.category} />
 			<span
 				class:list={[
 					'rounded-full px-2.5 py-0.5 text-xs font-semibold',
-					project.data.status === 'completed' && 'bg-emerald-400/10 text-emerald-400',
-					project.data.status === 'in-progress' && 'bg-amber-400/10 text-amber-400',
-					project.data.status === 'planned' && 'bg-zinc-500/10 text-zinc-400',
+					project.data.status === 'completed' && 'bg-tint text-cobalt',
+					project.data.status === 'in-progress' && 'bg-tint text-azure',
+					project.data.status === 'planned' && 'bg-slate/10 text-slate',
 				]}
 			>
 				{statusLabel[project.data.status]}
 			</span>
-			<span class="font-mono text-xs text-zinc-500">{project.data.year}</span>
 		</div>
+		<span class="ml-auto font-mono text-xs text-slate">{project.data.year}</span>
 		<a href={url}>
-			<h2 class="text-xl font-semibold text-zinc-50 transition-colors group-hover:text-emerald-400">
+			<h2
+				class:list={[
+					'text-xl font-semibold text-ink transition-colors',
+					project.data.category === 'academic' ? 'group-hover:text-cobalt' : 'group-hover:text-azure',
+				]}
+			>
 				{project.data.title}
 			</h2>
 		</a>
-		<p class="line-clamp-2 text-sm text-zinc-400">{project.data.description}</p>
+		<p class="line-clamp-2 text-sm text-slate">{project.data.description}</p>
 		<ul class="mt-auto flex flex-wrap gap-1.5 pt-2">
 			{project.data.tags.slice(0, 4).map((tag) => (
-				<li class="rounded bg-zinc-800 px-2 py-0.5 font-mono text-xs text-zinc-400">{tag}</li>
+				<li class="rounded border border-hairline px-2 py-0.5 font-mono text-xs text-slate">{tag}</li>
 			))}
 		</ul>
 	</div>
