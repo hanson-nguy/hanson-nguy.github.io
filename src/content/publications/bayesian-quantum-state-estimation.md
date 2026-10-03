@@ -3,7 +3,7 @@ title: "Unorthodox parallelization for Bayesian quantum state estimation"
 authors: ["Hanson H Nguyen", "Kody J H Law", "Joseph M Lukens"]
 venue: New Journal of Physics, 27 (5), 054507
 year: 2025
-citations: 5
+citations: 6
 link: https://iopscience.iop.org/article/10.1088/1367-2630/add618
 ---
 

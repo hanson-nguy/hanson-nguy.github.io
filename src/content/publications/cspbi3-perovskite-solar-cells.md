@@ -3,7 +3,7 @@ title: "All inorganic CsPbI3 perovskite solar cells with reduced mobile ion conc
 authors: ["Hanson Nguyen", "Saivineeth Penukula", "Mason Mahaffey", "Nicholas Rolston"]
 venue: MRS Communications, 14 (2), 208–214
 year: 2024
-citations: 8
+citations: 9
 link: https://link.springer.com/article/10.1557/s43579-023-00510-7
 ---
 

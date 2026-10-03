@@ -3,7 +3,7 @@ title: "Modeling electrothermal feedback of superconducting nanowire single phot
 authors: ["Hanson Nguyen", "Alejandro Simon", "Reed Foster", "Karl K Berggren"]
 venue: IEEE Transactions on Applied Superconductivity
 year: 2025
-citations: 0
+citations: 1
 link: https://ieeexplore.ieee.org/abstract/document/11217308/
 ---
 

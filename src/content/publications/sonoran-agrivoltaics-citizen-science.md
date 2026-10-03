@@ -3,7 +3,7 @@ title: "Sonoran Desert Photovoltaics Laboratory and Growing Green: A networked r
 authors: ["Michelle Jordan", "Sarah Bendok", "Hanson Nguyen", "Steven Zuiker", "Kelly Potter-Simmons", "Carlos Meza-Torres", "Greg Barron-Gafford", "Christiana Honsberg", "Kyle Boyer", "Rebekah Jongewaard", "Brianne Loya", "Janet Ankrum"]
 venue: 2024 IEEE 52nd Photovoltaic Specialist Conference (PVSC), 1465–1467
 year: 2024
-citations: 0
+citations: 1
 link: https://ieeexplore.ieee.org/abstract/document/10749646/
 ---
 
